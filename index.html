@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#2c160d">
+<title>Cookie Clicker — Bake the Universe</title>
+<style>
+:root{--bg:#24130d;--panel:#382116;--panel2:#4a2b1b;--cream:#fff0d2;--muted:#cdb59b;--gold:#ffc96b;--line:#6d442b;--green:#9ddc78}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#4b2a18 0,#24130d 55%);color:var(--cream);font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer;color:inherit;border:1px solid var(--line);background:linear-gradient(#68402a,#4b2a1a);border-radius:12px;padding:11px 14px;box-shadow:0 3px 0 #1b0d08;transition:transform .08s,filter .15s}button:active{transform:translateY(2px);box-shadow:0 1px 0 #1b0d08}button:disabled{opacity:.42;cursor:not-allowed;filter:grayscale(.5)}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px clamp(12px,3vw,30px);border-bottom:1px solid #68432b;background:#1d100bcf;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.brand{font-weight:900;letter-spacing:.05em;font-size:clamp(18px,3vw,26px)}.brand span{color:var(--gold)}.small{font-size:12px;color:var(--muted)}.header-actions{display:flex;gap:8px}.header-actions button{padding:8px 10px;font-size:13px}
+main{max-width:1200px;margin:auto;padding:20px 14px 42px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,410px);gap:18px}
+.panel{background:linear-gradient(145deg,#3a2116f2,#2b180ff5);border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 32px #10080455;overflow:hidden}
+.bakery{min-height:580px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:25px 16px;position:relative}
+h1{font-size:clamp(25px,4vw,38px);margin:4px 0 0}.subtitle{color:var(--muted);margin:4px 0 18px}
+.count{font-size:clamp(30px,5vw,46px);font-weight:900;letter-spacing:-.04em;overflow-wrap:anywhere}.persec{color:var(--gold);font-weight:650;margin-bottom:14px}
+.cookie-button{background:transparent;border:0;box-shadow:none;padding:0;border-radius:50%;width:min(60vw,280px);height:min(60vw,280px);max-width:280px;max-height:280px;display:grid;place-items:center;position:relative;touch-action:manipulation}
+.cookie-button:active{transform:scale(.97);box-shadow:none}.cookie-svg{width:100%;height:100%;filter:drop-shadow(0 15px 9px #1409059c);transition:transform .12s}.cookie-button:hover .cookie-svg{transform:rotate(-3deg) scale(1.025)}
+.hint{color:var(--muted);font-size:13px;margin-top:12px}.stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}.stat{background:#24140e;border:1px solid #54331f;padding:9px 12px;border-radius:12px;min-width:110px}.stat strong{display:block;color:var(--gold);font-size:17px}
+.tabs{display:flex;gap:6px;padding:12px;border-bottom:1px solid var(--line);background:#28160f}.tab{flex:1;padding:9px 5px;border-radius:9px;font-size:13px}.tab.active{background:#9b5c2d;border-color:#e2a55b;color:#fff8e9}
+.shop-content{padding:12px;max-height:690px;overflow:auto}.section-title{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin:7px 5px 10px;font-weight:800}
+.shop-item{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;margin-bottom:9px;border:1px solid #654029;border-radius:14px;background:linear-gradient(110deg,#452719,#321b11);min-height:78px}
+.item-icon{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;background:#25140e;font-size:27px;border:1px solid #70482c}
+.item-name{font-weight:800}.item-desc{font-size:12px;color:var(--muted)}.item-cost{font-weight:800;color:var(--gold);font-size:13px;margin-top:3px}.buy{padding:9px 10px;min-width:74px;font-size:12px}
+.empty{color:var(--muted);text-align:center;padding:28px 12px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#fff0d2;color:#32180d;padding:10px 16px;border-radius:99px;font-weight:800;box-shadow:0 6px 22px #0007;transition:.25s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}
+.float{position:fixed;pointer-events:none;z-index:10;color:#ffe5a4;font-weight:900;font-size:22px;text-shadow:0 2px 4px #000;animation:rise .8s ease-out forwards}@keyframes rise{to{transform:translateY(-75px);opacity:0}}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 25px}.achievement{padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:#321c12}.achievement.unlocked{border-color:#b28c49;background:#3a2a17}.achievement strong{display:block}.achievement span{font-size:12px;color:var(--muted)}
+@media(max-width:760px){main{grid-template-columns:1fr;padding:12px;gap:12px}.bakery{min-height:470px;padding:19px 12px}.cookie-button{width:min(67vw,250px);height:min(67vw,250px)}.shop-content{max-height:none}.header-actions button{font-size:11px;padding:7px}.brand{font-size:17px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">🍪 COOKIE <span>CLICKER</span></div><div class="small">A tiny bakery. An infinite universe.</div></div><div class="header-actions"><button id="saveBtn">Save</button><button id="resetBtn">Reset</button></div></header>
+<main>
+<section class="panel bakery">
+<h1>Your Cookie Bakery</h1><div class="subtitle">Every click brings you closer to cookie domination.</div>
+<div class="count" id="cookies">0 cookies</div><div class="persec" id="cps">per second: 0</div>
+<button class="cookie-button" id="bigCookie" aria-label="Bake one cookie">
+<svg class="cookie-svg" viewBox="0 0 300 300" role="img" aria-label="Big chocolate chip cookie">
+<defs><radialGradient id="dough" cx="35%" cy="25%" r="75%"><stop offset="0" stop-color="#f8d18a"/><stop offset=".55" stop-color="#d99a4e"/><stop offset="1" stop-color="#a65c27"/></radialGradient><radialGradient id="chip"><stop offset="0" stop-color="#59301c"/><stop offset="1" stop-color="#27120d"/></radialGradient></defs>
+<path d="M151 18 C174 13 183 29 201 31 C222 34 229 51 244 64 C263 80 254 99 270 117 C284 136 269 153 274 173 C278 195 258 202 250 222 C240 244 220 242 203 259 C184 276 166 264 146 278 C126 286 110 269 90 266 C67 263 62 243 46 230 C27 214 39 194 26 175 C13 156 30 139 25 119 C20 96 42 87 51 68 C61 47 81 51 100 36 C119 21 132 29 151 18Z" fill="url(#dough)" stroke="#9a5428" stroke-width="5"/>
+<g fill="url(#chip)"><ellipse cx="95" cy="81" rx="13" ry="10" transform="rotate(-25 95 81)"/><ellipse cx="157" cy="57" rx="10" ry="13" transform="rotate(20 157 57)"/><ellipse cx="211" cy="91" rx="15" ry="10" transform="rotate(-18 211 91)"/><ellipse cx="132" cy="117" rx="14" ry="11" transform="rotate(35 132 117)"/><ellipse cx="69" cy="147" rx="11" ry="14" transform="rotate(-15 69 147)"/><ellipse cx="190" cy="151" rx="12" ry="16" transform="rotate(24 190 151)"/><ellipse cx="235" cy="184" rx="12" ry="9"/><ellipse cx="109" cy="193" rx="16" ry="11" transform="rotate(-15 109 193)"/><ellipse cx="160" cy="230" rx="11" ry="15"/><ellipse cx="65" cy="218" rx="9" ry="12"/><ellipse cx="218" cy="228" rx="10" ry="13"/><ellipse cx="154" cy="165" rx="7" ry="6"/><ellipse cx="105" cy="145" rx="6" ry="8"/><ellipse cx="177" cy="89" rx="6" ry="8"/></g>
+<g fill="#ffe5a9" opacity=".45"><circle cx="82" cy="58" r="3"/><circle cx="120" cy="47" r="2"/><circle cx="222" cy="119" r="3"/><circle cx="47" cy="177" r="2"/><circle cx="178" cy="204" r="3"/><circle cx="125" cy="249" r="2"/></g>
+</svg></button>
+<div class="hint">Tap the cookie! Your progress saves on this device.</div>
+<div class="stats"><div class="stat"><strong id="clickPower">+1</strong><span class="small">per click</span></div><div class="stat"><strong id="totalBaked">0</strong><span class="small">baked all time</span></div><div class="stat"><strong id="buildingCount">0</strong><span class="small">buildings</span></div></div>
+</section>
+<section class="panel">
+<div class="tabs"><button class="tab active" data-tab="buildings">Buildings</button><button class="tab" data-tab="upgrades">Upgrades</button><button class="tab" data-tab="achievements">Awards</button></div>
+<div class="shop-content" id="shop"></div>
+</section>
+</main>
+<footer>Made for cookie lovers · Your game saves locally in this browser. Use Save before clearing browser data.</footer>
+<div class="toast" id="toast"></div>
+<script>
+(()=>{
+const buildings=[
+{id:'cursor',name:'Cursor',icon:'👆',desc:'An eager little finger.',base:15,cps:.1},
+{id:'grandma',name:'Grandma',icon:'👵',desc:'A nice grandma to bake cookies.',base:100,cps:1},
+{id:'farm',name:'Cookie Farm',icon:'🌾',desc:'Grows cookie dough plants.',base:1100,cps:8},
+{id:'mine',name:'Cookie Mine',icon:'⛏️',desc:'Mines chocolate chips.',base:12000,cps:47},
+{id:'factory',name:'Factory',icon:'🏭',desc:'Mass-produces delicious cookies.',base:130000,cps:260},
+{id:'bank',name:'Cookie Bank',icon:'🏦',desc:'Makes cookies earn more cookies.',base:1400000,cps:1400},
+{id:'temple',name:'Cookie Temple',icon:'🛕',desc:'Prays to the cookie gods.',base:20000000,cps:7800},
+{id:'portal',name:'Cookie Portal',icon:'🌀',desc:'Opens a portal to the Cookieverse.',base:330000000,cps:44000}
+];
+const upgrades=[
+{id:'finger1',name:'Stronger Fingers',icon:'🖱️',desc:'Double cookies per click.',cost:100,kind:'click',mult:2},
+{id:'finger2',name:'Cookie Gloves',icon:'🧤',desc:'Triple cookies per click.',cost:1000,kind:'click',mult:3},
+{id:'grandmaBoost',name:'Grandma’s Recipe',icon:'📖',desc:'Grandmas bake twice as fast.',cost:500,kind:'building',target:'grandma',mult:2},
+{id:'farmBoost',name:'Fertilizer',icon:'🌱',desc:'Farms bake twice as fast.',cost:6000,kind:'building',target:'farm',mult:2},
+{id:'mineBoost',name:'Chocolate Drill',icon:'💎',desc:'Mines bake twice as fast.',cost:65000,kind:'building',target:'mine',mult:2},
+{id:'global1',name:'Golden Oven',icon:'🔥',desc:'All buildings bake 25% faster.',cost:250000,kind:'global',mult:1.25},
+{id:'global2',name:'Cosmic Recipe',icon:'🌌',desc:'All buildings bake twice as fast.',cost:25000000,kind:'global',mult:2}
+];
+const achievements=[
+{id:'first',name:'First Crumb',desc:'Bake your first cookie.',test:s=>s.total>=1},
+{id:'hundred',name:'Cookie Jar',desc:'Bake 100 cookies total.',test:s=>s.total>=100},
+{id:'thousand',name:'Cookie Mountain',desc:'Bake 1,000 cookies total.',test:s=>s.total>=1000},
+{id:'million',name:'Millionaire Baker',desc:'Bake 1,000,000 cookies total.',test:s=>s.total>=1e6},
+{id:'tenBuildings',name:'Small Business',desc:'Own 10 buildings.',test:s=>Object.values(s.owned).reduce((a,b)=>a+b,0)>=10},
+{id:'oneEach',name:'Variety Is the Spice',desc:'Own one of every building.',test:s=>buildings.every(b=>(s.owned[b.id]||0)>0)}
+];
+const fresh=()=>({cookies:0,total:0,owned:{},bought:[],unlocked:[],clicks:0,last:Date.now()});
+let state=fresh(),tab='buildings',toastTimer;
+const $=id=>document.getElementById(id);
+const fmt=n=>{if(n<1000)return Math.floor(n).toLocaleString();const units=['K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc'];let i=-1;while(n>=1000&&i<units.length-1){n/=1000;i++}return n.toFixed(n<10?2:n<100?1:0)+units[i]};
+function cps(){let n=0;for(const b of buildings)n+=(state.owned[b.id]||0)*b.cps*(state.mults?.[b.id]||1);return n*(state.globalMult||1)}
+function clickPower(){return (state.clickMult||1)}
+function cost(b){return Math.ceil(b.base*Math.pow(1.15,state.owned[b.id]||0))}
+function notify(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),1800)}
+function save(silent=false){state.last=Date.now();try{localStorage.setItem('cookieClickerSave',JSON.stringify(state));if(!silent)notify('Game saved! 🍪')}catch(e){if(!silent)notify('Could not save in this browser.')}}
+function load(){try{const raw=localStorage.getItem('cookieClickerSave');if(raw){const parsed=JSON.parse(raw);state={...fresh(),...parsed};state.owned=state.owned||{};state.bought=state.bought||[];state.unlocked=state.unlocked||[];const elapsed=Math.max(0,Math.min(8*60*60,(Date.now()-(state.last||Date.now()))/1000));state.cookies+=cps()*elapsed;state.total+=cps()*elapsed}}catch(e){state=fresh()}}
+function unlockAchievements(){for(const a of achievements)if(!state.unlocked.includes(a.id)&&a.test(state)){state.unlocked.push(a.id);notify('Achievement unlocked: '+a.name+' 🏆')}}
+function renderStats(){$('cookies').textContent=fmt(state.cookies)+' cookies';$('cps').textContent='per second: '+fmt(cps());$('clickPower').textContent='+'+fmt(clickPower());$('totalBaked').textContent=fmt(state.total);$('buildingCount').textContent=Object.values(state.owned).reduce((a,b)=>a+b,0)}
+function renderShop(){
+const el=$('shop');el.innerHTML='';
+if(tab==='buildings'){
+const title=document.createElement('div');title.className='section-title';title.textContent='Build your cookie empire';el.append(title);
+buildings.forEach(b=>{const own=state.owned[b.id]||0,c=cost(b),item=document.createElement('div');item.className='shop-item';item.innerHTML=`<div class="item-icon">${b.icon}</div><div><div class="item-name">${b.name} <span class="small">×${own}</span></div><div class="item-desc">${b.desc}</div><div class="item-cost">🍪 ${fmt(c)} · +${fmt(b.cps*(state.mults?.[b.id]||1)*(state.globalMult||1))}/sec each</div></div><button class="buy" ${state.cookies<c?'disabled':''}>Buy</button>`;item.querySelector('button').onclick=()=>{if(state.cookies<c)return;state.cookies-=c;state.owned[b.id]=own+1;render();save(true)};el.append(item)})
+}else if(tab==='upgrades'){
+const title=document.createElement('div');title.className='section-title';title.textContent='Permanent improvements';el.append(title);let shown=0;
+upgrades.forEach(u=>{if(state.bought.includes(u.id))return;if(u.kind==='building'&&!(state.owned[u.target]>0))return;shown++;const item=document.createElement('div');item.className='shop-item';item.innerHTML=`<div class="item-icon">${u.icon}</div><div><div class="item-name">${u.name}</div><div class="item-desc">${u.desc}</div><div class="item-cost">🍪 ${fmt(u.cost)}</div></div><button class="buy" ${state.cookies<u.cost?'disabled':''}>Buy</button>`;item.querySelector('button').onclick=()=>{if(state.cookies<u.cost)return;state.cookies-=u.cost;state.bought.push(u.id);if(u.kind==='click')state.clickMult=(state.clickMult||1)*u.mult;if(u.kind==='building'){state.mults=state.mults||{};state.mults[u.target]=(state.mults[u.target]||1)*u.mult}if(u.kind==='global')state.globalMult=(state.globalMult||1)*u.mult;render();save(true);notify('Upgrade purchased! ✨')};el.append(item)});
+if(!shown){const p=document.createElement('div');p.className='empty';p.textContent='You have bought every upgrade currently available. Keep baking!';el.append(p)}
+}else{
+const title=document.createElement('div');title.className='section-title';title.textContent='Your achievements · '+state.unlocked.length+'/'+achievements.length;el.append(title);
+achievements.forEach(a=>{const ok=state.unlocked.includes(a.id),d=document.createElement('div');d.className='achievement'+(ok?' unlocked':'');d.innerHTML=`<strong>${ok?'🏆':'🔒'} ${a.name}</strong><span>${a.desc}</span>`;el.append(d)})
+}
+}
+function render(){unlockAchievements();renderStats();renderShop()}
+$('bigCookie').addEventListener('click',e=>{const gain=clickPower();state.cookies+=gain;state.total+=gain;state.clicks++;const f=document.createElement('div');f.className='float';f.textContent='+'+fmt(gain)+' 🍪';f.style.left=(e.clientX||innerWidth/2)+'px';f.style.top=(e.clientY||innerHeight/2)+'px';document.body.append(f);setTimeout(()=>f.remove(),850);renderStats();renderShop()});
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{tab=btn.dataset.tab;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));renderShop()}));
+$('saveBtn').onclick=()=>save();
+$('resetBtn').onclick=()=>{if(confirm('Reset all cookies and upgrades? This cannot be undone.')){state=fresh();save(true);render();notify('Fresh bakery started!')}};
+load();render();setInterval(()=>{const gain=cps()/10;state.cookies+=gain;state.total+=gain;renderStats();if(Math.random()<.1)renderShop()},100);setInterval(()=>save(true),15000);
+})();
+</script>
+</body>
+</html>
